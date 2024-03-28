@@ -1,0 +1,22 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+
+# Загрузка данных
+data = pd.read_csv('data.csv')
+X = data.iloc[:, :-1].values
+y = data['target'].values
+
+# Разделение данных на обучающую и тестовую выборки
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Создание и обучение модели
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Прогнозирование на тестовых данных
+y_pred = model.predict(X_test)
+
+# Оценка точности прогнозов
+print(classification_report(y_test, y_pred))
